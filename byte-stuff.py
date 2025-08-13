@@ -2,7 +2,7 @@ FLAG = '~'  # Frame delimiter
 ESC = '}'   # Escape character
 
 def byte_stuffing(data):
-    s = FLAG  # Start of frame
+    s = FLAG  # at starting
     for ch in data:
         if ch == FLAG:
             s += ESC + FLAG
@@ -10,14 +10,14 @@ def byte_stuffing(data):
             s += ESC + ESC
         else:
             s += ch
-    s += FLAG  # End of frame
+    s += FLAG  # end of all
     return s
 
 
 def byte_unstuffing(stuffed_data):
     us = ""
-    i = 1  # Skip first FLAG
-    while i < len(stuffed_data) - 1:  # Stop before last FLAG
+    i = 1  # skip 1st flag
+    while i < len(stuffed_data) - 1:  # leave last flag
         if stuffed_data[i] == ESC:
             i += 1
             us += stuffed_data[i]
@@ -27,7 +27,7 @@ def byte_unstuffing(stuffed_data):
     return us
 
 
-# Example usage:
+
 data = "Hello~World}Test~"
 print("Original Data:    ", data)
 stuffed_data = byte_stuffing(data)
